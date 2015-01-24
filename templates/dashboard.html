@@ -1,0 +1,63 @@
+  
+
+
+{% extends "base.html" %}
+{% block login %}
+    {% with user.username as username %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="main-left">
+        <div class="panel left">
+        <h1>{{ user.first_name }}'s Profile</h1>
+        <div class="tweetWrapper">
+            <table> <tr><td><a href="/users/{{ user.username }}">
+                <img class="avatar" src="{{ user.profile.gravatar_url }}"></td><td>
+                <span class="name">{{ user.first_name }}</span>
+            </a></td></tr></table>
+        <table><tr><td>Tweets</td><td>Following</td><td>Followers</td></tr>
+		<tr><td>{{ tweets.count }}</td><td>{{ user.profile.follows.all.count }}</td><td>{{ user.profile.followed_by.all.count }}</td></tr>
+		</table>
+        </div>
+    </div>
+		
+			
+    </div>
+	<div class="main-right">
+    <div class="panel right1">
+        <h1>What's happening?</h1>
+        <p>
+            <form action="/submit" method="post">
+            {% for field in tweet_form %}{% csrf_token %}
+            {{ field }}
+            {% endfor %}
+            <input type="hidden" value="{{ next_url }}" name="next_url">
+			The number of characters left is: <span id="remainingCount1">0</span>
+            <input type="submit" value="Tweet!">
+            </form>
+		</p>
+		
+			
+    </div>
+    <div class="panel right1">
+        {% for tweet in tweets %}
+        <div class="tweetWrapper">
+            <a href="/users/{{ tweet.user.username }}">
+                <img class="avatar" src="{{ tweet.user.profile.gravatar_url }}">
+                <span class="name">{{ tweet.user.first_name }}</span>
+            </a>
+            @{{ tweet.user.username }}
+            <p>
+                {{ tweet.content }}
+            </p>
+			<p>
+			{{ tweet.creation_date }}
+			</p>
+        </div>
+        {% endfor %}
+    </div>
+	</div>
+{% endblock %}

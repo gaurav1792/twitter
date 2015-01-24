@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet/less" href="{{ STATIC_URL }}style.less">
+    <script src="{{ STATIC_URL }}lib.js"></script>
+	<script src="{{ STATIC_URL }}less.js"></script>
+	<script src="{{ STATIC_URL }}widget.js"></script>
+	<script type="text/javascript">
+    $(document).ready(function () {
+        $("#id_content").CharacterCount({
+            charactersRemainingControlId: "remainingCount1"
+        });
+    });
+</script>  
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <img src="{{ STATIC_URL }}gfx/logo.png">
+            {% block login %}
+            <a href="/">Home</a>
+            <a href="/users/">Find Others</a>
+            <a href="/users/{{ username }}">My Profile</a>
+            <form action="/logout">
+                <input type="submit" id="btnLogOut" value="Log Out">
+            </form>
+            {% endblock %}
+        </div>
+    </header>
+    <div id="login">
+        <div class="wrapper">
+            {% block flash %}
+            {% if auth_form.non_field_errors or user_form.non_field_errors or ribbit_form.errors %}
+            <div class="flash error">
+                {{ auth_form.non_field_errors }}
+                {{ user_form.non_field_errors }}
+                {{ ribbit_form.content.errors }}
+            </div>
+            {% endif %}
+            {% if notice %}
+            <div class="flash notice">
+                {{ notice }}
+            </div>
+            {% endif %}
+            {% endblock %}
+
+            {% block content %}
+
+            </div>
+		</div>
+			{% endblock %}
+        
+    <footer>
+        <div class="wrapper">
+            G-twitter - A Twitter Clone.
+            <span> © Gaurav Dubey </span>
+        </div>
+    </footer>
+</body>
+</html>

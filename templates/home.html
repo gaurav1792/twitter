@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block login %}
+<div class="panel right">
+	<h1>New to Twitter? Sign Up</h1>
+    <form action="/login" method="post">{% csrf_token %}
+        {% for field in auth_form %}
+        {{ field }}
+        {% endfor %}
+        <input type="submit" id="btnLogIn" value="Log In">
+    </form>
+</div>
+	
+{% endblock %}
+
+
+{% block content %}
+
+<div class="panel right">
+    <h1>New to Twitter? Sign Up</h1>
+    <p>
+        <form action="/signup" method="post">{% csrf_token %}
+            {% for field in user_form %}
+            {{ field }}
+            {% endfor %}
+            <input type="submit" value="SignUp">
+        </form>
+    </p>
+</div>
+{% endblock %}
