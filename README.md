@@ -17,6 +17,11 @@ To set the application locally, first clone the repo
 ```  
 git clone https://github.com/gaurav1792/twitter.git
 ```
+Changing Directory
+```  
+cd twitter
+```
+
 
 Create Database
 
