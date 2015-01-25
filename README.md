@@ -12,6 +12,42 @@ Skype: gaurav9911103459 <br>
 
 ***
 
+##Prerequisites 
+
+Install Python 2.7.9
+<a href="https://www.python.org/downloads/">Download</a>
+
+To set Path in Environmental Variable
+```  
+C:\Python34\;C:\Python34\Scripts;
+```
+Install setuptools 12.0.4
+<a href="https://pypi.python.org/pypi/setuptools">Download</a>
+
+Install pip
+```  
+easy_install pip.
+```
+
+Install pip
+```  
+pip install django.
+```
+
+<a href="https://docs.djangoproject.com/en/1.7/howto/windows/">Installation Reference for windows</a>
+
+Install MySQL
+
+<a href="http://dev.mysql.com/downloads/windows/">Download</a>
+
+Install Connector
+
+<a href="https://pypi.python.org/pypi/MySQL-python/1.2.4">Download</a>
+
+
+
+##Application Installation
+
 To set the application locally, first clone the repo
 
 ```  
@@ -21,7 +57,6 @@ Changing Directory
 ```  
 cd twitter
 ```
-
 
 Create Database
 
@@ -36,9 +71,9 @@ To configure Database update settings.py
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'twitterclone',
-        'USER': 'gaurav', #chage username accoringly
-        'PASSWORD': 'gaurav', #chage password accoringly
+        'NAME': 'twitterclone',  #database name
+        'USER': 'gaurav', #username
+        'PASSWORD': 'gaurav', #password
     }
 }
 
