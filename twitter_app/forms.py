@@ -6,7 +6,7 @@ from twitter_app.models import Tweet
 
 class SignUp(UserCreationForm):
     first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Name'}))
-    username = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'placeholder': 'Email'}))
+    username = forms.CharField(required=True, widget=forms.widgets.EmailInput(attrs={'placeholder': 'Email'}))
     password1 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
     password2 = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password Confirmation'}))
  

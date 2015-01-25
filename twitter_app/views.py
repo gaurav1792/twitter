@@ -122,25 +122,28 @@ def users(request, username="", tweet_form=None):
 
 
 @login_required
-def following(request, username="", tweet_form=None):
-	if username:
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            raise Http404
-        tweets = Tweet.objects.filter(user=user.id)
-        if username == request.user.username or request.user.profile.follows.filter(user__username=username):
-			return render(request, 'user.html', {'user': user, 'tweets': tweets, })
-		return render(request, 'user.html', {'user': user, 'tweets': tweets, 'follow': True, 'unfollow': True, })
-    users = User.objects.all().annotate(tweet_count=Count('tweet'))
-    tweets = map(get_latest, users)
-    obj = zip(users, tweets)
-    tweet_form = tweet_form or TweetForm()
-    return render(request,
-                  'profiles.html',
-                  {'obj': obj, 'next_url': '/users/',
-                   'tweet_form': tweet_form,
-                   'username': request.user.username, 'follow': True, 'unfollow': True,})
+def following(request, auth_form=None, user_form=None):
+    # User is logged in
+    #if request.user.is_authenticated():
+        tweet_form = TweetForm()
+        user = request.user
+        tweets_self = Tweet.objects.filter(user=user.id)
+        user_followers = user__userprofile__in=user.profile.follows.all
+        tweets = user_followers
+        return render(request,
+                      'following.html',
+                      {'tweet_form': tweet_form, 'user': user,
+                       'tweets': tweets,
+                       'next_url': '/', })
+    #else:
+        # User is not logged in
+    #    auth_form = auth_form or Login()
+     #   user_form = user_form or SignUp()
+ 
+      #  return render(request,
+       #               'home.html',
+        #              {'auth_form': auth_form, 'user_form': user_form, })
+
 
 				   
 @login_required

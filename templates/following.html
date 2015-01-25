@@ -1,3 +1,6 @@
+  
+
+
 {% extends "base.html" %}
 {% block login %}
     {% with user.username as username %}
@@ -6,9 +9,9 @@
 {% endblock %}
 
 {% block content %}
-	
-	<div class="main-left">
-    <div class="panel left">
+
+  <div class="main-left">
+        <div class="panel left">
         <h1>{{ user.first_name }}'s Profile</h1>
         <div class="tweetWrapper">
             <table> <tr><td><a href="/users/{{ user.username }}">
@@ -18,30 +21,26 @@
         <table><tr><td>Tweets</td><td>Following</td><td>Followers</td></tr>
 		<tr><td>{{ tweets.count }}</td><td>{{ user.profile.follows.all.count }}</td><td>{{ user.profile.followed_by.all.count }}</td></tr>
 		</table>
-        
-            
         </div>
     </div>
-	</div>
+		
+			
+    </div>
 	<div class="main-right">
-   <div class="panel right1">
-        <h1> {{ user.first_name }} is Following </h1>
-        {% for tempuser, tweets in obj %}
-        
-		<div class="tweetWrapper">
-            <p><a href="/users/{{ user.username }}">
-                <img class="avatar" src="{{ user.profile.gravatar_url }}">
-                <span class="name">{{ user.first_name }}</span>
-            </a>
-                @{{ tempuser.username }}
-            </p>
-			<p>
-                {{ tempuser.tweet_count }} Tweets
-                <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
-                <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
-            </p>
-            
+    <div class="panel right1">
+        <h1>{{ user.first_name }} is Following</h1>
+		{% for tweet in tweets %}
+     		<div class="tweetWrapper">
+            <table> <tr><td><a href="/users/{{ tweet.user.username }}">
+                <img class="avatar" src="{{ tweet.user.profile.gravatar_url }}"></td><td>
+                <span class="name">{{ tweet.user.first_name }}</span>
+            </a></td></tr></table>
+        <table><tr><td>Tweets</td><td>Following</td><td>Followers</td></tr>
+		<tr><td>{{ tweets.count }}</td><td>{{ tweet.user.profile.follows.all.count }}</td><td>{{ tweet.user.profile.followed_by.all.count }}</td></tr>
+		</table>
         </div>
+		
+		
 		
         {% endfor %}
     </div>

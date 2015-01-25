@@ -22,7 +22,7 @@
         {% for user, tweets in obj %}
         
 		<div class="tweetWrapper">
-            <p><a href="/users/{{ user.username }}">
+            <p><a href="/users/{{ user.username }}" title="click to view complete profile">
                 <img class="avatar" src="{{ user.profile.gravatar_url }}">
                 <span class="name">{{ user.first_name }}</span>
             </a>
