@@ -56,6 +56,15 @@
 			<p>
 			{{ tweet.creation_date }}
 			</p>
+			<p>
+					<form action="/retweet" method="post">
+						{% csrf_token %}
+						<input type="hidden" value="{{ tweet.content }}" name="next_url">
+						<input type="hidden" value="{{ next_url }}" name="next_url">
+						<input type="submit" value="ReTweet!">
+					</form>
+			</p>
+			
         </div>
         {% endfor %}
     </div>

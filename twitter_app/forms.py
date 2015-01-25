@@ -23,7 +23,7 @@ class SignUp(UserCreationForm):
         model = User
 		
 class Login(AuthenticationForm):
-    username = forms.CharField(widget=forms.widgets.TextInput(attrs={'placeholder': 'Username'}))
+    username = forms.CharField(widget=forms.widgets.EmailInput(attrs={'placeholder': 'Username'}))
     password = forms.CharField(widget=forms.widgets.PasswordInput(attrs={'placeholder': 'Password'}))
  
     def is_valid(self):

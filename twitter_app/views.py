@@ -122,6 +122,28 @@ def users(request, username="", tweet_form=None):
 
 
 @login_required
+def following(request, username="", tweet_form=None):
+	if username:
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        tweets = Tweet.objects.filter(user=user.id)
+        if username == request.user.username or request.user.profile.follows.filter(user__username=username):
+			return render(request, 'user.html', {'user': user, 'tweets': tweets, })
+		return render(request, 'user.html', {'user': user, 'tweets': tweets, 'follow': True, 'unfollow': True, })
+    users = User.objects.all().annotate(tweet_count=Count('tweet'))
+    tweets = map(get_latest, users)
+    obj = zip(users, tweets)
+    tweet_form = tweet_form or TweetForm()
+    return render(request,
+                  'profiles.html',
+                  {'obj': obj, 'next_url': '/users/',
+                   'tweet_form': tweet_form,
+                   'username': request.user.username, 'follow': True, 'unfollow': True,})
+
+				   
+@login_required
 def follow(request):
     if request.method == "POST":
         follow_id = request.POST.get('follow', False)
@@ -133,6 +155,21 @@ def follow(request):
                 return redirect('/users/') #redirecting after unsuccessful follow
     return redirect('/users/') #redirecting after successful follow
 
+	
+@login_required
+def retweet(request):
+    if request.method == "POST":
+        tweet_form = TweetForm(data=request.POST)
+        next_url = request.POST.get("next_url", "/")
+        if tweet_form.is_valid():
+            tweet = tweet_form.save(commit=False)
+            tweet.user = request.user
+            tweet.save()
+            return redirect('/users/')
+        else:
+            return redirect(next_url)
+    
+	
 @login_required	
 def unfollow(request): #unfollow any user
     if request.method == "POST":
